@@ -6,7 +6,7 @@ class UserinfosController < ApplicationController
     # @classtable = @user.classtables.find_by(col: params["day"], row: params["period"])
     # @note = @classtable.notes.create(title: params["title"], description: params["description"])
     # render json: {id: @note.id}
-    byebug
+
     jsonClassTable = @classtables.map { |classtable|   { name: classtable.title,  description: classtable.description, col: classtable.col, row: classtable.row, note: classtable.notes} }
     render json: {classtable: jsonClassTable}
   end

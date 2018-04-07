@@ -1,4 +1,8 @@
 <template>
+  <div class="">
+    <div class="buttons">
+      <router-link :to="getRoute() + '/preView'"><i class="fas fa-arrow-right"></i>GO TO PREVIEW</router-link>
+    </div>
   <div class="noteContrainer">
     <div class="markdownEditor">
       <textarea class="markdownInput" name="name" v-on:change="compileMarkdown"  v-model="markdownData">
@@ -10,6 +14,7 @@
 
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -25,6 +30,9 @@ export default {
     }
   },
   methods:{
+    getRoute: function(){
+      return this.$route.path
+    },
     getnoteId: function(){
       return this.$route.params.noteId
     },
@@ -55,6 +63,11 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+  color: black;
+  font-size: 30px;
+}
 
 .htmlOutput{
   overflow: scroll;
@@ -66,6 +79,11 @@ export default {
   display:inline-block;
 
 }
+.buttons{
+  padding-top: 50px;
+  width: 700px;
+  margin: auto;
+}
 
 .noteContrainer{
   display: flex;
@@ -73,7 +91,7 @@ export default {
   height: 500px;
   background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
   margin: auto;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .markdownEditor{

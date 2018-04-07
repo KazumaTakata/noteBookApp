@@ -14,6 +14,7 @@ import VueRouter from "vue-router"
 import splash from "../splash.vue"
 import SignUp from "../SignUp.vue"
 import Login from "../Login.vue"
+import preView from "../preView.vue"
 import { store } from "../store.js"
 
 Vue.use(VueRouter)
@@ -24,7 +25,8 @@ const routes = [
   { path: '/notelist/:noteId', name: 'notelist' ,component: NoteList},
   { path: '/notelist/:noteId/:listId',component: NoteEdit },
   { path: '/Signup',  component: SignUp },
-  { path: '/login',  component: Login }
+  { path: '/login',  component: Login },
+  { path: '/notelist/:noteId/:listId/preview',  component: preView }
 
 
 ]
