@@ -1,15 +1,19 @@
 <template>
   <div class="header">
     <div class="homeIcon">
-    <i class="fas fa-home"></i>
-    CnoteBook
+    <router-link to="/">
+      <i class="fas fa-home"></i>
+      CnoteBook
+    </router-link>
     </div>
     <div class="LoginSignup">
     <div class="homeIcon">
+    <router-link to="/login">
     <i class="fas fa-sign-in-alt"></i>
+    </router-link>
     </div>
     <div class="homeIcon">
-      <router-link to="/login">
+      <router-link to="/signup">
         <i class="fas fa-user-plus"></i>
       </router-link>
     </div>
@@ -28,6 +32,10 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+  color: white;
+}
 p {
   font-size: 2em;
   text-align: center;

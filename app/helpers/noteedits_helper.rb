@@ -1,0 +1,2 @@
+module NoteeditsHelper
+end

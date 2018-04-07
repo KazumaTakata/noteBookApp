@@ -8,4 +8,7 @@ class SignupsController < ApplicationController
     @user = User.find_by(email: params["email"])
     render json: {id: @user.id}
   end
+
+  def find
+  end
 end

@@ -1,4 +1,5 @@
 <template>
+  <div v-if="checkIfLogIN()">
   <div class="home">
     <div class="timetable">
       <template v-for="c in col">
@@ -11,7 +12,7 @@
               <div class="itemtime">
                 {{getclassDataDescription(c, r)}}
               </div>
-              <router-link :to="{ name: 'notelist', params: { noteId: String(c) + String(r) }}">User</router-link>
+              <router-link class="listlink" :to="{ name: 'notelist', params: { noteId: String(c) + String(r) }}"><i class="fas fa-arrow-right"></i></router-link>
             </template>
           </div>
         </template>
@@ -26,12 +27,19 @@
       <label for="">description</label>
       <textarea class="panelTextarea" type="text" name="" v-model="description">
       </textarea>
-      <button v-on:click="submitbutton" class="submitButton" type="button" name="button">SET</button>
+      <button v-on:click="setClass" class="submitButton" type="button" name="button">SET</button>
+    </div>
+  </div>
+</div>
+  <div v-else>
+    <div class="message">
+        please login
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data: function () {
     return {
@@ -60,6 +68,9 @@ export default {
     this.classData = arr
   },
   methods:{
+    checkIfLogIN(){
+      return this.$store.state.user.login
+    },
     gotonoteBook(e){
       e.stopPropagation();
 
@@ -71,10 +82,6 @@ export default {
         return this.$store.state.classData[y][x]["description"]
     },
     clickItem: function(y, x){
-      // console.log("clicked", event.target.id[0])
-      // let Id = event.target.id
-      // let y = Id[0]
-      // let x = id[1]
       this.panelVisible = "visible"
       this.activePanel.x = x
       this.activePanel.y = y
@@ -82,10 +89,17 @@ export default {
     closePanel: function(event){
       this.panelVisible = "hidden"
     },
-    submitbutton: function(event){
+    setClass: function(event){
       console.log(this.description, this.Time, this.className)
-      let obj = {activePanel:this.activePanel, data: {name: this.className, time: this.Time, description: this.description}}
+      let obj = {activePanel:this.activePanel, data: {name: this.className, time: this.Time, description: this.description, note: []} }
       this.$store.commit("classStateChange", obj)
+      axios.post("classTable", {
+        userId: this.$store.state.user.id,
+        description: this.description,
+        time: this.Time,
+        className: this.className,
+        activePanel: this.activePanel
+      })
       this.description = "",
       this.Time = "",
       this.className = ""
@@ -95,6 +109,28 @@ export default {
 </script>
 
 <style scoped>
+
+.listlink{
+
+}
+
+.message{
+    color: black;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    font-size: 30px;
+    transform: translate(50%, 50%);
+}
+a{
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+
+}
+a:hover{
+  color: rgba(217, 166, 80, 0.82)
+}
 .itembutton{
   background: transparent;
   border: none;

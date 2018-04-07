@@ -1,15 +1,16 @@
 <template>
+  <div v-if="checkIfLogin()">
   <div class="noteContrainer">
     <div class="buttons">
       <button type="button" v-on:click="addNote" name="button"><i class="fas fa-plus"></i></button>
       <button type="button" name="button"><i class="fas fa-minus"></i></button>
     </div>
       <ul>
-        <li v-for="(note, index) in getNoteList()">
+        <li v-for='(note, index) in getNoteList'>
           <div class="listItemContainer">
           <div class="">
             <div class="noteListTitle">
-                {{note.NoteTitle}}
+                {{note.title}}
             </div>
             <div class="noteListDes">
                 {{note.description}}
@@ -34,9 +35,14 @@
         <button v-on:click="setbutton" class="setButton" type="button" name="button">SET</button>
       </div>
   </div>
+  </div>
+  <div v-else class="message">
+    please login
+  </div>
 </template>
 
 <script>
+import axios from "axios"
 export default {
   data: function () {
     return {
@@ -46,31 +52,30 @@ export default {
       panelVisible: "hidden",
       NoteTitle: "",
       description: "",
-      activePanel : {x: "", y: ""}
+      activePanel : {x: "", y: ""},
 
     }
   },
   mounted(){
-    let x = 5
-    var arr = new Array(x);
-    for (var i = 0; i < x; i++) {
-        arr[i] = new Array(x);
-    }
-    for (var i = 0; i < x; i++) {
-      for (var j = 0; j < x; j++) {
-          arr[i][j] = {name: ""}
-      }
-    }
-    this.classData = arr
+
+  },
+  computed: {
+    getNoteList() {
+      return this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note
+    },
+
   },
   methods:{
+
+    checkIfLogin: function(){
+      return this.$store.state.user.login
+    },
     getRoute:function(){
       return this.$route.params.noteId
     },
-    getNoteList: function(){
-      let noteList = this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note
-      return noteList
-    },
+    // getNoteList: function(){
+    //   return this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note
+    // },
     addNote: function(){
       this.panelVisible = "visible"
     },
@@ -79,9 +84,22 @@ export default {
     },
     setbutton: function(){
       let classId = this.$route.params.noteId
-      let obj = {classId: {y: classId[0], x: classId[1]}, data: { NoteTitle: this.NoteTitle, description: this.description} }
-      this.$store.commit("addNote", obj)
       this.panelVisible = "hidden"
+
+      axios.post("addNote", {
+        userId: this.$store.state.user.id ,
+        day: classId[1],
+        period: classId[0],
+        title: this.NoteTitle,
+        description: this.description
+      }).then(
+        (d) =>{
+          console.log("id is ", d.data.id)
+          let obj = {classId: {y: classId[0], x: classId[1]}, data: { NoteTitle: this.NoteTitle, description: this.description, id: d.data.id, markdown: ""} }
+          this.$store.commit("addNote", obj)
+          this.$forceUpdate()
+        }
+      )
     }
 
   }
@@ -89,6 +107,19 @@ export default {
 </script>
 
 <style scoped>
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.message{
+    color: black;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    font-size: 30px;
+    transform: translate(50%, 50%);
+}
 
 .listItemContainer{
   display: flex;

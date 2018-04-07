@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405222405) do
+ActiveRecord::Schema.define(version: 20180407011315) do
+
+  create_table "classtables", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "col"
+    t.string "row"
+    t.index ["user_id"], name: "index_classtables_on_user_id"
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "classtable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "markdown"
+    t.index ["classtable_id"], name: "index_notes_on_classtable_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"

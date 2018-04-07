@@ -11,16 +11,20 @@ import Home from "../home.vue"
 import NoteList from "../notelist.vue"
 import NoteEdit from "../noteEdit.vue"
 import VueRouter from "vue-router"
+import splash from "../splash.vue"
 import SignUp from "../SignUp.vue"
+import Login from "../Login.vue"
 import { store } from "../store.js"
 
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', component: splash },
+  { path: '/notelist/' ,component: Home},
   { path: '/notelist/:noteId', name: 'notelist' ,component: NoteList},
   { path: '/notelist/:noteId/:listId',component: NoteEdit },
-  { path: '/login',  component: SignUp }
+  { path: '/Signup',  component: SignUp },
+  { path: '/login',  component: Login }
 
 
 ]

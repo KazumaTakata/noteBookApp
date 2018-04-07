@@ -14,13 +14,14 @@
 </template>
 
 <script>
+import axios from "axios"
 import showdown from "showdown";
 let converter = new showdown.Converter()
 export default {
   data: function () {
     return {
-      markdownData: "",
-      htmlCode: ""
+      markdownData: this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown,
+      htmlCode: converter.makeHtml(this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown)
     }
   },
   methods:{
@@ -33,7 +34,19 @@ export default {
     compileMarkdown: function(){
       console.log(this.markdownData)
       this.htmlCode = converter.makeHtml(this.markdownData)
-      console.log(this.htmlCode)
+      this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown = this.markdownData
+
+      axios.post("addMarkDown", {
+        markdown: this.markdownData,
+        col: this.$route.params.noteId[1],
+        row: this.$route.params.noteId[0],
+        userId: this.$store.state.user.id,
+        noteId: this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].id
+      }).then(
+        (d) =>{
+          console.log("id is ", d.data.id)
+        }
+      )
     }
 
 

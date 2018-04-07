@@ -10,7 +10,7 @@ for (var i = 0; i < x; i++) {
 }
 for (var i = 0; i < x; i++) {
   for (var j = 0; j < x; j++) {
-      arr[i][j] = {name: "name", description: "description"}
+      arr[i][j] = {name: "______", description: "______", note: ""}
   }
 }
 
@@ -29,11 +29,7 @@ export const store = new Vuex.Store({
       state.classData[obj.activePanel.y][obj.activePanel.x] = obj.data
     },
     addNote(state, obj) {
-    if (typeof state.classData[obj.classId.y][obj.classId.x].note == "undefined"){
-      state.classData[obj.classId.y][obj.classId.x].note = [obj.data]
-    }else{
       state.classData[obj.classId.y][obj.classId.x].note.push(obj.data)
-    }
     },
     SignUp(state, obj){
       state.user.id = obj.id

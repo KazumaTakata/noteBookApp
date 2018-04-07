@@ -1,0 +1,2 @@
+module NotelistsHelper
+end

@@ -1,12 +1,11 @@
 <template>
-
   <div class="noteContrainer">
     <div class="SignUpForm">
       <div class="title">
-      SignUp
+      Login
       </div>
       <div class="">
-      <label for="">Email</label>
+        <label for="">Email</label>
       </div>
       <input type="text" name="" value="" v-model="email">
       <label for="">password</label>
@@ -36,14 +35,24 @@ export default {
       console.log("submit")
       this.email
       this.password
-      axios.post("signup", {
+      axios.post("login", {
         email: this.email,
         password: this.password
       }).then(
         d =>{
           console.log("id is ", d.data.id)
           this.$store.commit("SignUp", {id: d.data.id})
-          this.$router.push({path: `/notelist`})
+          axios.get(`getinfo?userId=${d.data.id}`).then( (res) => {
+              console.log(res.data)
+              let classtabledata = res.data.classtable
+              for (let i = 0; i < res.data.classtable.length; i++) {
+                  this.$store.state.classData[classtabledata[i].row][classtabledata[i].col].description = classtabledata[i].description
+                  this.$store.state.classData[classtabledata[i].row][classtabledata[i].col].name = classtabledata[i].name
+                  this.$store.state.classData[classtabledata[i].row][classtabledata[i].col].note = classtabledata[i].note
+              }
+              this.$router.push({path: `/notelist`})
+          })
+
         }
       )
     }
@@ -56,7 +65,6 @@ export default {
   font-size: 40px;
   margin-bottom: 40px;
 }
-
 input{
   width: 80%;
   background: transparent;
