@@ -10,6 +10,8 @@
 <script>
 import axios from "axios"
 import showdown from "showdown";
+import katex from  "katex";
+
 let converter = new showdown.Converter()
 export default {
   data: function () {
@@ -21,8 +23,26 @@ export default {
 
   },
   methods:{
+    compileMarkdownHelp(markdown){
+      let splittedInput = markdown.split(/\$\$/)
+      let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
+      let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
+      let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
+      let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
+
+      let outputHtml = []
+      for( let i=0 ; i< otherHtml.length; i++ ){
+        outputHtml.push(otherHtml[i])
+        if (typeof mathHtml[i] != "undefined"){
+          outputHtml.push(mathHtml[i])
+        }
+      }
+      // let compiledInput = converter.makeHtml(this.inputData)
+      return outputHtml.join("")
+    },
     getMarkDown(){
-      return converter.makeHtml(this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown)
+
+      return this.compileMarkdownHelp(this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown)
     }
 
   }

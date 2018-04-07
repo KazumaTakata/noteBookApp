@@ -19,14 +19,15 @@
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
+import katex from  "katex";
 import showdown from "showdown";
 let converter = new showdown.Converter()
 export default {
   data: function () {
     return {
       markdownData: this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown,
-      htmlCode: converter.makeHtml(this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown)
+      htmlCode: this.compileMarkdownHelp(this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown)
     }
   },
   methods:{
@@ -39,9 +40,49 @@ export default {
     getListId: function(){
       return this.$route.params.listId
     },
+    compileMarkdownHelp: function(markdown){
+      let splittedInput = markdown.split(/\$\$/)
+      let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
+      let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
+      let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
+      let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
+
+      let outputHtml = []
+      for( let i=0 ; i< otherHtml.length; i++ ){
+        outputHtml.push(otherHtml[i])
+        if (typeof mathHtml[i] != "undefined"){
+          outputHtml.push(mathHtml[i])
+        }
+      }
+      // let compiledInput = converter.makeHtml(this.inputData)
+      return outputHtml.join("")
+
+    },
+
     compileMarkdown: function(){
-      console.log(this.markdownData)
-      this.htmlCode = converter.makeHtml(this.markdownData)
+      // console.log(this.markdownData)
+      // this.htmlCode = converter.makeHtml(this.markdownData)
+      // console.log(katex.renderToString( this.markdownData ))
+
+      // let splittedInput = this.markdownData.split(/\$\$/)
+      // let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
+      // let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
+      // let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
+      // let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
+      //
+      // let outputHtml = []
+      // for( let i=0 ; i< otherHtml.length; i++ ){
+      //   outputHtml.push(otherHtml[i])
+      //   if (typeof mathHtml[i] != "undefined"){
+      //     outputHtml.push(mathHtml[i])
+      //   }
+      // }
+      // // let compiledInput = converter.makeHtml(this.inputData)
+      // this.htmlCode = outputHtml.join("")
+
+      this.htmlCode = this.compileMarkdownHelp(this.markdownData)
+
+
       this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note[this.$route.params.listId].markdown = this.markdownData
 
       axios.post("addMarkDown", {
