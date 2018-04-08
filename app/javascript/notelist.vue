@@ -24,16 +24,17 @@
           </div>
         </li>
       </ul>
-
-      <div class="panel" v-bind:style="{visibility: panelVisible}" >
-        <button v-on:click="closePanel" class="closeButton" type="button" name="button">X</button>
-        <label for="">Note Title</label>
-        <input class="panelInput" type="text" name="" v-model="NoteTitle">
-        <label for="">description</label>
-        <textarea class="panelTextarea" type="text" name="" v-model="description">
-        </textarea>
-        <button v-on:click="setbutton" class="setButton" type="button" name="button">SET</button>
-      </div>
+      <transition name="fade">
+        <div class="panel" v-if="panelVisible" >
+          <button v-on:click="closePanel" class="closeButton" type="button" name="button">X</button>
+          <label for="">Note Title</label>
+          <input class="panelInput" type="text" name="" v-model="NoteTitle">
+          <label for="">description</label>
+          <textarea class="panelTextarea" type="text" name="" v-model="description">
+          </textarea>
+          <button v-on:click="setbutton" class="setButton" type="button" name="button">SET</button>
+        </div>
+      </transition>
   </div>
   </div>
   <div v-else class="message">
@@ -49,7 +50,7 @@ export default {
       col: [0,1,2,3,4],
       row: [0,1,2,3,4],
       classData: "",
-      panelVisible: "hidden",
+      panelVisible: false,
       NoteTitle: "",
       description: "",
       activePanel : {x: "", y: ""},
@@ -77,14 +78,14 @@ export default {
     //   return this.$store.state.classData[this.$route.params.noteId[0]][this.$route.params.noteId[1]].note
     // },
     addNote: function(){
-      this.panelVisible = "visible"
+      this.panelVisible = true
     },
     closePanel: function(){
-      this.panelVisible = "hidden"
+      this.panelVisible = false
     },
     setbutton: function(){
       let classId = this.$route.params.noteId
-      this.panelVisible = "hidden"
+      this.panelVisible = false
 
       axios.post("addNote", {
         userId: this.$store.state.user.id ,
@@ -107,6 +108,14 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+
 a{
   text-decoration: none;
   color: white;

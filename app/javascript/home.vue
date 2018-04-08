@@ -1,4 +1,4 @@
-<template>
+<template class="homeComponent">
   <div v-if="checkIfLogIN()">
   <div class="home">
     <div class="timetable">
@@ -18,7 +18,8 @@
         </template>
     </template>
     </div>
-    <div class="panel" v-bind:style="{visibility: panelVisible}" >
+    <transition name="fade">
+    <div class="panel" v-if="panelVisible" >
       <button v-on:click="closePanel" class="closeButton" type="button" name="button">X</button>
       <label for="">ClassName</label>
       <input class="panelInput" type="text" name="" v-model="className">
@@ -29,6 +30,7 @@
       </textarea>
       <button v-on:click="setClass" class="submitButton" type="button" name="button">SET</button>
     </div>
+    </transition>
   </div>
 </div>
   <div v-else>
@@ -38,6 +40,7 @@
   </div>
 </template>
 
+
 <script>
 import axios from "axios"
 export default {
@@ -46,7 +49,7 @@ export default {
       col: [0,1,2,3,4],
       row: [0,1,2,3,4],
       classData: "",
-      panelVisible: "hidden",
+      panelVisible: false,
       className: "",
       Time: "",
       description: "",
@@ -82,12 +85,12 @@ export default {
         return this.$store.state.classData[y][x]["description"]
     },
     clickItem: function(y, x){
-      this.panelVisible = "visible"
+      this.panelVisible = true
       this.activePanel.x = x
       this.activePanel.y = y
     },
     closePanel: function(event){
-      this.panelVisible = "hidden"
+      this.panelVisible = false
     },
     setClass: function(event){
       console.log(this.description, this.Time, this.className)
@@ -109,6 +112,13 @@ export default {
 </script>
 
 <style scoped>
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 
 .listlink{
 
@@ -205,7 +215,7 @@ label{
   top: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid rgb(46, 213, 143);
-  box-shadow: 2px 2px 5px rgb(37, 122, 23);
+  box-shadow: 2px 2px 5px rgb(37, 122, 23), -4px -4px 5px rgb(35, 91, 50) ;
   width: 500px;
   height: 500px;
   background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
