@@ -41,21 +41,25 @@ export default {
       return this.$route.params.listId
     },
     compileMarkdownHelp: function(markdown){
-      let splittedInput = markdown.split(/\$\$/)
-      let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
-      let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
-      let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
-      let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
+      if (markdown != null){
+        let splittedInput = markdown.split(/\$\$/)
+        let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
+        let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
+        let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
+        let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
 
-      let outputHtml = []
-      for( let i=0 ; i< otherHtml.length; i++ ){
-        outputHtml.push(otherHtml[i])
-        if (typeof mathHtml[i] != "undefined"){
-          outputHtml.push(mathHtml[i])
+        let outputHtml = []
+        for( let i=0 ; i< otherHtml.length; i++ ){
+          outputHtml.push(otherHtml[i])
+          if (typeof mathHtml[i] != "undefined"){
+            outputHtml.push(mathHtml[i])
+          }
         }
+        // let compiledInput = converter.makeHtml(this.inputData)
+        return outputHtml.join("")
+      } else {
+        return ""
       }
-      // let compiledInput = converter.makeHtml(this.inputData)
-      return outputHtml.join("")
 
     },
 

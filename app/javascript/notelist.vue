@@ -28,7 +28,7 @@
         <div class="panel" v-if="panelVisible" >
           <button v-on:click="closePanel" class="closeButton" type="button" name="button">X</button>
           <label for="">Note Title</label>
-          <input class="panelInput" type="text" name="" v-model="NoteTitle">
+          <input class="panelInput" type="text" name="" v-model="title">
           <label for="">description</label>
           <textarea class="panelTextarea" type="text" name="" v-model="description">
           </textarea>
@@ -51,7 +51,7 @@ export default {
       row: [0,1,2,3,4],
       classData: "",
       panelVisible: false,
-      NoteTitle: "",
+      title: "",
       description: "",
       activePanel : {x: "", y: ""},
 
@@ -91,12 +91,12 @@ export default {
         userId: this.$store.state.user.id ,
         day: classId[1],
         period: classId[0],
-        title: this.NoteTitle,
+        title: this.title,
         description: this.description
       }).then(
         (d) =>{
           console.log("id is ", d.data.id)
-          let obj = {classId: {y: classId[0], x: classId[1]}, data: { NoteTitle: this.NoteTitle, description: this.description, id: d.data.id, markdown: ""} }
+          let obj = {classId: {y: classId[0], x: classId[1]}, data: { title: this.title, description: this.description, id: d.data.id, markdown: ""} }
           this.$store.commit("addNote", obj)
           this.$forceUpdate()
         }
