@@ -16,8 +16,11 @@ import SignUp from "../SignUp.vue"
 import Login from "../Login.vue"
 import preView from "../preView.vue"
 import { store } from "../store.js"
+import Toasted from 'vue-toasted';
+
 
 Vue.use(VueRouter)
+Vue.use(Toasted)
 
 const routes = [
   { path: '/', component: splash },

@@ -42,8 +42,13 @@ export default {
       }).then(
         d =>{
           console.log("id is ", d.data.id)
-          this.$store.commit("SignUp", {id: d.data.id})
-          this.$router.push({path: `/notelist`})
+          if (d.data.id != null){
+            this.$store.commit("SignUp", {id: d.data.id})
+            this.$router.push({path: `/notelist`})
+          } else {
+            d.data.error.map( e => { this.$toasted.show( e, {position: 'top-center', duration: 3000}) } )
+          }
+
         }
       )
     }

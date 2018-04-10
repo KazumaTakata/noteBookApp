@@ -6,13 +6,15 @@
         <template v-for="r in row">
           <div v-bind:id="String(c)+String(r)" v-on:click="clickItem(c,r)" class="tableItem">
             <template v-if="classData != ''">
-              <div class="itemname">
+              <div class="itemtitle">
               {{getclassDataName(c, r)}}
               </div>
-              <div class="itemtime">
+              <div class="itemdesc">
                 {{getclassDataDescription(c, r)}}
               </div>
-              <router-link class="listlink" :to="{ name: 'notelist', params: { noteId: String(c) + String(r) }}"><i class="fas fa-arrow-right"></i></router-link>
+              <template v-if="getclassDataName(c, r) != '______' && getclassDataDescription(c, r) != '______'">
+                <router-link class="listlink" :to="{ name: 'notelist', params: { noteId: String(c) + String(r) }}"><i class="fas fa-arrow-right"></i></router-link>
+              </template>
             </template>
           </div>
         </template>
@@ -79,10 +81,22 @@ export default {
 
     },
     getclassDataName:function(y, x){
+        let name = this.$store.state.classData[y][x]["name"]
+        if (name.length > 10){
+          return name.substring(0, 9) + "..."
+        } else {
+          return name
+        }
         return this.$store.state.classData[y][x]["name"]
     },
     getclassDataDescription:function(y, x){
-        return this.$store.state.classData[y][x]["description"]
+        let description = this.$store.state.classData[y][x]["description"]
+        if (description.length > 20){
+          return description.substring(0, 19) + "..."
+        } else {
+          return description
+        }
+
     },
     clickItem: function(y, x){
       this.panelVisible = true
@@ -106,6 +120,7 @@ export default {
       this.description = "",
       this.Time = "",
       this.className = ""
+      this.panelVisible = false
     }
   }
 }
@@ -151,10 +166,17 @@ a:hover{
 .itembutton:hover{
   background: rgb(71, 180, 75);
 }
-.itemname{
+.itemtitle{
   padding: 10px;
+  font-size: 20px;
   word-wrap: break-word;
 }
+.itemdesc{
+  padding: 10px;
+  font-size: 10px;
+  word-wrap: break-word;
+}
+
 .itemtime{
   padding: 10px;
   word-wrap: break-word

@@ -40,6 +40,7 @@ export default {
         password: this.password
       }).then(
         d =>{
+          if (typeof d.data.error === "undefined"){
           console.log("id is ", d.data.id)
           this.$store.commit("SignUp", {id: d.data.id})
           axios.get(`getinfo?userId=${d.data.id}`).then( (res) => {
@@ -52,7 +53,10 @@ export default {
               }
               this.$router.push({path: `/notelist`})
           })
-
+        } else {
+          console.log(d.data.error)
+          this.$toasted.show(d.data.error, {position: 'top-center', duration: 3000})
+        }
         }
       )
     }
