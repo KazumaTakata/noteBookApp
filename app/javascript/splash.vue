@@ -49,7 +49,7 @@ a{
 .splashDiv{
   position: relative;
   background: url('/assets/laptop-3289261_1920.jpg');
-  height: 100vh;
+  height: calc(100vh - 43px);
 }
 
 </style>

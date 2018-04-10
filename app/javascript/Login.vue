@@ -55,7 +55,7 @@ export default {
           })
         } else {
           console.log(d.data.error)
-          this.$toasted.show(d.data.error, {position: 'top-center', duration: 3000})
+          this.$toasted.show(d.data.error, {position: 'top-center', duration: 3000, type: 'error'})
         }
         }
       )
@@ -65,42 +65,58 @@ export default {
 </script>
 
 <style scoped>
+
+.noteContrainer{
+  background: url('/assets/laptop-3289261_1920.jpg');
+  height: calc(100vh - 43px);
+  min-height: 500px;
+  position: relative;
+}
+
 .title{
-  font-size: 40px;
+  font-size: 25px;
   margin-bottom: 40px;
 }
 input{
   width: 80%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
   margin: 30px;
   font-size: 30px;
   outline: none;
 }
-label{
-  font-size: 40px;
+input:focus{
+  border-bottom: 1px solid rgb(168, 77, 129);
 }
 
+label{
+  font-size: 16px;
+}
 button{
   background: rgb(97, 168, 78);
+  font-weight: lighter;
   border: none;
-  font-size: 40px;
-  padding: 20px;
+  font-size: 13px;
+  padding: 15px 40px;
   border-radius: 20px;
 }
 
 button:hover{
   background:  rgb(99, 187, 92);
 }
-
 .SignUpForm{
-  padding: 50px;
   width: 600px;
   background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
-  margin: auto;
-  margin-top: 50px;
   text-align: center;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  padding: 30px;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px black, -2px -2px 2px black
 }
+
 
 </style>

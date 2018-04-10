@@ -64,25 +64,6 @@ export default {
     },
 
     compileMarkdown: function(){
-      // console.log(this.markdownData)
-      // this.htmlCode = converter.makeHtml(this.markdownData)
-      // console.log(katex.renderToString( this.markdownData ))
-
-      // let splittedInput = this.markdownData.split(/\$\$/)
-      // let mathInput = splittedInput.filter((item, index) => { return index % 2 == 1 })
-      // let otherInput = splittedInput.filter((item, index) => { return index % 2 == 0 })
-      // let mathHtml = mathInput.map( (str) => { return  katex.renderToString( str ) } )
-      // let otherHtml = otherInput.map( (str) => { return converter.makeHtml(str) } )
-      //
-      // let outputHtml = []
-      // for( let i=0 ; i< otherHtml.length; i++ ){
-      //   outputHtml.push(otherHtml[i])
-      //   if (typeof mathHtml[i] != "undefined"){
-      //     outputHtml.push(mathHtml[i])
-      //   }
-      // }
-      // // let compiledInput = converter.makeHtml(this.inputData)
-      // this.htmlCode = outputHtml.join("")
 
       this.htmlCode = this.compileMarkdownHelp(this.markdownData)
 
@@ -134,7 +115,7 @@ a{
   display: flex;
   width: 700px;
   height: 500px;
-  background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
+  background: linear-gradient(to right, rgb(17, 60, 9), rgb(15, 64, 13));
   margin: auto;
   margin-top: 30px;
 }

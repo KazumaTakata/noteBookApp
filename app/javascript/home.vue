@@ -201,11 +201,11 @@ a:hover{
   width: 80%;
   font-size: 30px;
   border: none;
-  border-bottom: 1px solid rgb(37, 122, 23);
+  border-bottom: 1px solid white;
   outline: none;
   margin: 30px;
   background: transparent;
-  color: rgba(8, 18, 13, 0.88);
+  color: white;
 }
 
 label{
@@ -216,17 +216,21 @@ label{
   width: 80%;
   font-size: 20px;
   border: none;
-  border-bottom: 1px solid rgb(37, 122, 23);
+  border-bottom: 1px solid white;
   outline: none;
   margin: 30px;
   background: transparent;
   resize: none;
   height: 150px;
-  color: rgba(8, 18, 13, 0.88);
+  color: white;
 }
 
 .panelInput:focus{
-  border-bottom: 1px solid rgb(46, 213, 143);
+  border-bottom: 1px solid rgb(193, 66, 115);
+}
+
+.panelTextarea:focus{
+  border-bottom: 1px solid rgb(193, 66, 115);
 }
 
 .panel{
@@ -250,7 +254,7 @@ label{
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   width: 600px;
   height: 600px;
-  background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
+  background: linear-gradient(to right, rgb(17, 60, 9), rgb(15, 64, 13));
   margin: auto;
   margin-top: 40px;
 }
