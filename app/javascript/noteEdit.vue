@@ -123,7 +123,7 @@ a{
 .markdownEditor{
   height: 100%;
   width: 350px;
-  outline: 1px solid black;
+  outline: 1px solid rgba(106, 89, 95, 0.75);
 }
 
 .markdownInput{

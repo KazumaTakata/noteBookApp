@@ -49,7 +49,7 @@ p {
   font-size: 20px;
   background: linear-gradient(to right, rgb(78, 233, 117) , rgb(70, 180, 67));
   padding: 10px;
-  min-width: 600px
+  min-width: 880px
 }
 .homeIcon{
   color: white;

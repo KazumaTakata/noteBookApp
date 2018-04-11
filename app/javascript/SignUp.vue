@@ -9,7 +9,7 @@
       </div>
       <input type="text" name="" value="" v-model="email">
       <label for="">password</label>
-      <input type="text" name="" value="" v-model="password">
+      <input type="password" name="" value="" v-model="password">
       <div class="">
           <button v-on:click="sendSignUp()" type="button" name="button">Submit</button>
       </div>
@@ -33,8 +33,7 @@ export default {
   methods:{
     sendSignUp: function(){
       console.log("submit")
-      this.email
-      this.password
+
       axios.post("signup", {
         email: this.email,
         password: this.password
@@ -61,6 +60,8 @@ export default {
   background: url('/assets/laptop-3289261_1920.jpg');
   height: calc(100vh - 43px);
   position: relative;
+  min-width: 900px;
+  min-height: 500px;
 }
 
 .title{
@@ -78,7 +79,7 @@ input{
   outline: none;
 }
 input:focus{
-  border-bottom: 1px solid orange;
+  border-bottom: 1px solid rgb(168, 77, 129);
 }
 
 label{

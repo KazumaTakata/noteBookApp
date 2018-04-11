@@ -1,6 +1,13 @@
 <template class="homeComponent">
   <div v-if="checkIfLogIN()">
   <div class="home">
+    <div class="daysContainer">
+      <template v-for="d in days">
+        <div class="daysContainerItem">
+          {{d}}
+        </div>
+      </template>
+    </div>
     <div class="timetable">
       <template v-for="c in col">
         <template v-for="r in row">
@@ -19,6 +26,7 @@
           </div>
         </template>
     </template>
+    </div>
     </div>
     <transition name="fade">
     <div class="panel" v-if="panelVisible" >
@@ -50,6 +58,7 @@ export default {
     return {
       col: [0,1,2,3,4],
       row: [0,1,2,3,4],
+      days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
       classData: "",
       panelVisible: false,
       className: "",
@@ -127,6 +136,22 @@ export default {
 </script>
 
 <style scoped>
+.daysContainer{
+  display: flex;
+  width: 600px;
+  color: black;
+  justify-content: space-around;
+  margin: auto;
+  margin-top: 40px;
+}
+
+.daysContainerItem{
+  outline: 1px solid green;
+  height: 100%;
+  width: 100%;
+  padding: 20px 0px;
+  text-align: center;
+}
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s;
@@ -256,7 +281,7 @@ label{
   height: 600px;
   background: linear-gradient(to right, rgb(17, 60, 9), rgb(15, 64, 13));
   margin: auto;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 }
 .tableItem{
   text-align: center;

@@ -43,13 +43,15 @@ a{
   right: 50%;
   font-size: 150px;
   color: rgb(27, 64, 48);
-  transform: translate(50%, -100%);
+  transform: translate(50%, -50%);
   font-weight: bold;
 }
 .splashDiv{
   position: relative;
   background: url('/assets/laptop-3289261_1920.jpg');
   height: calc(100vh - 43px);
+  min-height: 500px;
+  min-width: 900px;
 }
 
 </style>

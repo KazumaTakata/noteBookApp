@@ -34,7 +34,12 @@ export const store = new Vuex.Store({
     SignUp(state, obj){
       state.user.id = obj.id
       state.user.login = true
+    },
+    removeList(state, obj){
+      obj.list.sort(function(a, b){ return b - a })
+      obj.list.map( index => { state.classData[obj.y][obj.x].note.splice(index, 1) } )
     }
+
 
   }
 })

@@ -9,7 +9,7 @@
       </div>
       <input type="text" name="" value="" v-model="email">
       <label for="">password</label>
-      <input type="text" name="" value="" v-model="password">
+      <input type="password" name="" value="" v-model="password">
       <div class="">
           <button v-on:click="sendSignUp()" type="button" name="button">Submit</button>
       </div>
@@ -70,6 +70,7 @@ export default {
   background: url('/assets/laptop-3289261_1920.jpg');
   height: calc(100vh - 43px);
   min-height: 500px;
+  min-width: 900px;
   position: relative;
 }
 

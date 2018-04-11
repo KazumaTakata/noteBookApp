@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   post "/login", to: "signups#login"
   post "/classTable", to: "classtables#new"
   post "/addNote", to: "notelists#new"
+  delete "/addNote", to: "notelists#destroy"
   post "/addMarkDown", to: "noteedits#new"
 
 end
